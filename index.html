@@ -9,12 +9,21 @@
 <body>
 
 <h1>Bebeto vs Johan 🕹️</h1>
-<p>ESPACIO o toca la pantalla para saltar</p>
+<p>ESPACIO (PC) o botón SALTAR (celular)</p>
 
 <div class="game">
-    <div id="dino">BEBETO</div>
-    <div id="cactus">JOHAN</div>
+    <div class="player">
+        <span class="label">BEBETO</span>
+        <div id="dino"></div>
+    </div>
+
+    <div class="enemy">
+        <span class="label">JOHAN</span>
+        <div id="cactus"></div>
+    </div>
 </div>
+
+<button id="jumpBtn">SALTAR</button>
 
 <p id="score">Puntaje: 0</p>
 
@@ -22,4 +31,5 @@
 </body>
 </html>
 <!-- prueba github pages -->
+
 
