@@ -15,31 +15,19 @@ body {
     overflow: hidden;
 }
 
-/* Contenedores */
-.player, .enemy {
+.player {
     position: absolute;
     bottom: 0;
+    left: 30px;
 }
 
-/* BEBETO */
-.player { left: 30px; }
 #dino {
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     background: #444;
     border-radius: 6px;
 }
 
-/* JOHAN */
-.enemy { right: -60px; animation: move 1.6s infinite linear; }
-#cactus {
-    width: 60px;
-    height: 40px;
-    background: green;
-    border-radius: 6px;
-}
-
-/* Nombres */
 .label {
     display: block;
     font-size: 10px;
@@ -47,21 +35,18 @@ body {
     margin-bottom: 2px;
 }
 
-/* Salto */
-.jump { animation: jump 0.5s ease-out; }
-@keyframes jump {
-    0% { transform: translateY(0); }
-    50% { transform: translateY(-110px); }
-    100% { transform: translateY(0); }
+/* Obstáculos pequeños */
+.cactus {
+    width: 30px;
+    height: 30px;
+    background: green;
+    border-radius: 5px;
+    position: absolute;
+    bottom: 0;
+    right: 0;
 }
 
-/* Movimiento */
-@keyframes move {
-    from { right: -60px; }
-    to { right: 100%; }
-}
-
-/* Botón */
+/* Botón móvil */
 #jumpBtn {
     margin-top: 15px;
     padding: 15px 40px;
@@ -75,6 +60,7 @@ body {
 @media (min-width: 768px) {
     #jumpBtn { display: none; }
 }
+
 
 
 
