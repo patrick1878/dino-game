@@ -1,68 +1,50 @@
-body {
-    font-family: Arial, sans-serif;
-    text-align: center;
-    background: #f2f2f2;
+const dino = document.getElementById("dino");
+const cactus = document.getElementById("cactus");
+const scoreText = document.getElementById("score");
+
+let score = 0;
+let isJumping = false;
+
+// PC
+document.addEventListener("keydown", (e) => {
+    if (e.code === "Space") jump();
+});
+
+// MÓVIL
+document.addEventListener("touchstart", (e) => {
+    e.preventDefault();
+    jump();
+}, { passive: false });
+
+function jump() {
+    if (isJumping) return;
+
+    isJumping = true;
+    dino.classList.add("jump");
+
+    setTimeout(() => {
+        dino.classList.remove("jump");
+        isJumping = false;
+    }, 500);
 }
 
-.game {
-    width: 90%;
-    max-width: 600px;
-    height: 200px;
-    border: 3px solid #333;
-    margin: auto;
-    position: relative;
-    background: white;
-    overflow: hidden;
-}
+// GAME LOOP
+setInterval(() => {
+    const dinoRect = dino.getBoundingClientRect();
+    const cactusRect = cactus.getBoundingClientRect();
 
-/* BEBETO */
-#dino {
-    width: 60px;
-    height: 60px;
-    background: #444;
-    color: white;
-    font-size: 10px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    bottom: 0;
-    left: 30px;
-    border-radius: 6px;
-}
+    // Colisión real (mejor método)
+    if (
+        cactusRect.left < dinoRect.right &&
+        cactusRect.right > dinoRect.left &&
+        cactusRect.bottom > dinoRect.top
+    ) {
+        alert(`💀 Game Over\nBebeto perdió contra Johan\nPuntaje: ${score}`);
+        score = 0;
+    }
 
-/* Salto */
-.jump {
-    animation: jump 0.5s ease-out;
-}
+    score++;
+    scoreText.textContent = `Puntaje: ${score}`;
+}, 50);
 
-@keyframes jump {
-    0% { bottom: 0; }
-    50% { bottom: 110px; }
-    100% { bottom: 0; }
-}
-
-/* JOHAN */
-#cactus {
-    width: 60px;
-    height: 40px;
-    background: green;
-    color: white;
-    font-size: 10px;
-    font-weight: bold;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: absolute;
-    bottom: 0;
-    right: -60px;
-    border-radius: 6px;
-    animation: move 1.6s infinite linear;
-}
-
-@keyframes move {
-    from { right: -60px; }
-    to { right: 100%; }
-}
 
