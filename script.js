@@ -1,32 +1,30 @@
 const game = document.querySelector(".game");
-const dino = document.getElementById("dino");
 const player = document.querySelector(".player");
 const jumpBtn = document.getElementById("jumpBtn");
 const scoreText = document.getElementById("score");
 
 let isJumping = false;
-let dinoY = 0;
+let playerY = 0; // posición vertical
 let score = 0;
 let obstacles = [];
 let gameSpeed = 5;
 
-// Función de salto suave
+// Función de salto
 function jump() {
     if (isJumping) return;
     isJumping = true;
-    let velocity = 0;
-    let gravity = 0.6;
-    let jumpStrength = 12;
+
+    let velocity = 12; // fuerza inicial del salto
+    const gravity = 0.6;
 
     function animate() {
-        if (dinoY === 0) velocity = jumpStrength;
         velocity -= gravity;
-        dinoY += velocity;
+        playerY += velocity;
 
-        if (dinoY < 0) dinoY = 0;
-        player.style.bottom = dinoY + "px"; // mover contenedor completo
+        if (playerY < 0) playerY = 0; // no bajar de la plataforma
+        player.style.bottom = playerY + "px";
 
-        if (dinoY > 0 || velocity > 0) {
+        if (playerY > 0 || velocity > 0) {
             requestAnimationFrame(animate);
         } else {
             isJumping = false;
@@ -36,9 +34,9 @@ function jump() {
     requestAnimationFrame(animate);
 }
 
-// Eventos PC y móvil
-document.addEventListener("keydown", e => { 
-    if (e.code === "Space" || e.key === " ") jump(); 
+// Eventos de salto
+document.addEventListener("keydown", e => {
+    if (e.code === "Space" || e.key === " ") jump();
 });
 jumpBtn.addEventListener("click", jump);
 
@@ -75,7 +73,7 @@ function gameLoop() {
         if (
             cactusLeft < playerRight &&
             cactusRight > playerLeft &&
-            dinoY < cactus.offsetHeight
+            playerY < cactus.offsetHeight
         ) {
             alert(`💀 Game Over\nJOHAN SE KCHO A BEBETO\nPuntaje: ${score}`);
             obstacles.forEach(c => c.remove());
@@ -98,6 +96,7 @@ function gameLoop() {
 // Iniciar juego
 createObstacle();
 gameLoop();
+
 
 
 
