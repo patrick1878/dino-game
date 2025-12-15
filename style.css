@@ -1,51 +1,68 @@
-const dino = document.getElementById("dino");
-const cactus = document.getElementById("cactus");
-const scoreText = document.getElementById("score");
-
-let score = 0;
-let isJumping = false;
-
-// Teclado (PC)
-document.addEventListener("keydown", (event) => {
-    if (event.code === "Space") {
-        jump();
-    }
-});
-
-// Pantalla táctil (celular)
-document.addEventListener("touchstart", () => {
-    jump();
-});
-
-// Función de salto
-function jump() {
-    if (isJumping) return;
-
-    isJumping = true;
-    dino.classList.add("jump");
-
-    setTimeout(() => {
-        dino.classList.remove("jump");
-        isJumping = false;
-    }, 500);
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f2f2f2;
 }
 
-// Loop del juego
-setInterval(() => {
-    const dinoBottom = parseInt(
-        window.getComputedStyle(dino).getPropertyValue("bottom")
-    );
+.game {
+    width: 90%;
+    max-width: 600px;
+    height: 200px;
+    border: 3px solid #333;
+    margin: auto;
+    position: relative;
+    background: white;
+    overflow: hidden;
+}
 
-    const cactusRight = parseInt(
-        window.getComputedStyle(cactus).getPropertyValue("right")
-    );
+/* BEBETO */
+#dino {
+    width: 60px;
+    height: 60px;
+    background: #444;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    left: 30px;
+    border-radius: 6px;
+}
 
-    // Colisión
-    if (cactusRight > 480 && cactusRight < 540 && dinoBottom < 50) {
-        alert(`💀 Game Over\nBebeto perdió contra Johan\nPuntaje: ${score}`);
-        score = 0;
-    }
+/* Salto */
+.jump {
+    animation: jump 0.5s ease-out;
+}
 
-    score++;
-    scoreText.textContent = `Puntaje: ${score}`;
-}, 50);
+@keyframes jump {
+    0% { bottom: 0; }
+    50% { bottom: 110px; }
+    100% { bottom: 0; }
+}
+
+/* JOHAN */
+#cactus {
+    width: 60px;
+    height: 40px;
+    background: green;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    right: -60px;
+    border-radius: 6px;
+    animation: move 1.6s infinite linear;
+}
+
+@keyframes move {
+    from { right: -60px; }
+    to { right: 100%; }
+}
+
