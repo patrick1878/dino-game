@@ -1,6 +1,7 @@
 const dino = document.getElementById("dino");
 const cactus = document.getElementById("cactus");
 const scoreText = document.getElementById("score");
+const jumpBtn = document.getElementById("jumpBtn");
 
 let score = 0;
 let isJumping = false;
@@ -10,11 +11,8 @@ document.addEventListener("keydown", (e) => {
     if (e.code === "Space") jump();
 });
 
-// MÓVIL
-document.addEventListener("touchstart", (e) => {
-    e.preventDefault();
-    jump();
-}, { passive: false });
+// BOTÓN MÓVIL
+jumpBtn.addEventListener("click", jump);
 
 function jump() {
     if (isJumping) return;
@@ -33,7 +31,6 @@ setInterval(() => {
     const dinoRect = dino.getBoundingClientRect();
     const cactusRect = cactus.getBoundingClientRect();
 
-    // Colisión real (mejor método)
     if (
         cactusRect.left < dinoRect.right &&
         cactusRect.right > dinoRect.left &&
@@ -46,5 +43,6 @@ setInterval(() => {
     score++;
     scoreText.textContent = `Puntaje: ${score}`;
 }, 50);
+
 
 
