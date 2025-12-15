@@ -5,50 +5,68 @@ const jumpBtn = document.getElementById("jumpBtn");
 
 let score = 0;
 let isJumping = false;
+let dinoY = 0; // posición vertical del dinosaurio (0 = suelo)
 
-// PC
-document.addEventListener("keydown", (e) => {
-    if (e.code === "Space") jump();
-});
-
-// BOTÓN MÓVIL
-jumpBtn.addEventListener("click", jump);
-
+// Función de salto (controlado por JS)
 function jump() {
     if (isJumping) return;
 
     isJumping = true;
-    dino.classList.add("jump");
 
-    setTimeout(() => {
-        dino.classList.remove("jump");
-        isJumping = false;
-    }, 500);
+    let upInterval = setInterval(() => {
+        if (dinoY >= 110) { // altura máxima
+            clearInterval(upInterval);
+            // Bajar
+            let downInterval = setInterval(() => {
+                if (dinoY <= 0) {
+                    clearInterval(downInterval);
+                    isJumping = false;
+                    dinoY = 0;
+                    dino.style.bottom = dinoY + "px";
+                } else {
+                    dinoY -= 10;
+                    dino.style.bottom = dinoY + "px";
+                }
+            }, 20);
+        } else {
+            dinoY += 10;
+            dino.style.bottom = dinoY + "px";
+        }
+    }, 20);
 }
 
-// GAME LOOP (lógica tipo Dino Chrome)
+// Eventos PC y móvil
+document.addEventListener("keydown", (e) => { if (e.code === "Space") jump(); });
+jumpBtn.addEventListener("click", jump);
+
+// Movimiento cactus
+let cactusX = 600; // posición inicial
+function moveCactus() {
+    cactusX -= 8; // velocidad
+    if (cactusX < -60) cactusX = 600; // reinicio al salir
+    cactus.style.left = cactusX + "px";
+}
+
+// Game loop
 setInterval(() => {
-    const dinoBottom = parseInt(
-        window.getComputedStyle(dino).getPropertyValue("bottom")
-    );
+    moveCactus();
 
-    const cactusLeft = cactus.getBoundingClientRect().left;
-    const dinoRight = dino.getBoundingClientRect().right;
+    // Colisión real
+    const dinoLeft = dino.offsetLeft;
+    const dinoRight = dinoLeft + dino.offsetWidth;
+    const cactusRight = cactusX + cactus.offsetWidth;
+    const cactusLeft = cactusX;
 
-    // 👉 COLISIÓN SOLO SI BEBETO ESTÁ EN EL SUELO
-    if (
-        cactusLeft < dinoRight &&
-        cactusLeft > dinoRight - 60 &&
-        dinoBottom <= 5 &&       // <- clave: está en el piso
-        !isJumping
-    ) {
+    if (cactusRight > dinoLeft && cactusLeft < dinoRight && dinoY < 40) {
         alert(`💀 Game Over\nBebeto perdió contra Johan\nPuntaje: ${score}`);
         score = 0;
+        cactusX = 600; // reinicio cactus
     }
 
     score++;
     scoreText.textContent = `Puntaje: ${score}`;
-}, 50);
+}, 20);
+
 
 
 
