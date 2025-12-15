@@ -15,17 +15,14 @@ body {
     overflow: hidden;
 }
 
-/* CONTENEDORES */
+/* Contenedores */
 .player, .enemy {
     position: absolute;
     bottom: 0;
 }
 
 /* BEBETO */
-.player {
-    left: 30px;
-}
-
+.player { left: 30px; }
 #dino {
     width: 60px;
     height: 60px;
@@ -34,11 +31,7 @@ body {
 }
 
 /* JOHAN */
-.enemy {
-    right: -60px;
-    animation: move 1.6s infinite linear;
-}
-
+.enemy { right: -60px; animation: move 1.6s infinite linear; }
 #cactus {
     width: 60px;
     height: 40px;
@@ -46,7 +39,7 @@ body {
     border-radius: 6px;
 }
 
-/* NOMBRES ARRIBA */
+/* Nombres */
 .label {
     display: block;
     font-size: 10px;
@@ -54,24 +47,21 @@ body {
     margin-bottom: 2px;
 }
 
-/* SALTO */
-.jump {
-    animation: jump 0.5s ease-out;
-}
-
+/* Salto */
+.jump { animation: jump 0.5s ease-out; }
 @keyframes jump {
     0% { transform: translateY(0); }
     50% { transform: translateY(-110px); }
     100% { transform: translateY(0); }
 }
 
-/* MOVIMIENTO JOHAN */
+/* Movimiento */
 @keyframes move {
     from { right: -60px; }
     to { right: 100%; }
 }
 
-/* BOTÓN SALTAR (solo móvil) */
+/* Botón */
 #jumpBtn {
     margin-top: 15px;
     padding: 15px 40px;
@@ -82,12 +72,9 @@ body {
     border: none;
     border-radius: 10px;
 }
-
-/* Ocultar botón en PC */
 @media (min-width: 768px) {
-    #jumpBtn {
-        display: none;
-    }
+    #jumpBtn { display: none; }
 }
+
 
 
