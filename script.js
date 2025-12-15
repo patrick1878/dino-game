@@ -11,34 +11,45 @@ document.addEventListener("keydown", (e) => {
     if (e.code === "Space") jump();
 });
 
-// MÓVIL
+// BOTÓN MÓVIL
 jumpBtn.addEventListener("click", jump);
 
 function jump() {
     if (isJumping) return;
+
     isJumping = true;
     dino.classList.add("jump");
+
     setTimeout(() => {
         dino.classList.remove("jump");
         isJumping = false;
     }, 500);
 }
 
+// GAME LOOP (lógica tipo Dino Chrome)
 setInterval(() => {
-    const dinoRect = dino.getBoundingClientRect();
-    const cactusRect = cactus.getBoundingClientRect();
+    const dinoBottom = parseInt(
+        window.getComputedStyle(dino).getPropertyValue("bottom")
+    );
 
+    const cactusLeft = cactus.getBoundingClientRect().left;
+    const dinoRight = dino.getBoundingClientRect().right;
+
+    // 👉 COLISIÓN SOLO SI BEBETO ESTÁ EN EL SUELO
     if (
-        cactusRect.left < dinoRect.right &&
-        cactusRect.right > dinoRect.left &&
-        cactusRect.bottom > dinoRect.top
+        cactusLeft < dinoRight &&
+        cactusLeft > dinoRight - 60 &&
+        dinoBottom <= 5 &&       // <- clave: está en el piso
+        !isJumping
     ) {
         alert(`💀 Game Over\nBebeto perdió contra Johan\nPuntaje: ${score}`);
         score = 0;
     }
+
     score++;
     scoreText.textContent = `Puntaje: ${score}`;
 }, 50);
+
 
 
 
