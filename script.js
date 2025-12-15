@@ -1,47 +1,69 @@
-const dino = document.getElementById("dino");
-const cactus = document.getElementById("cactus");
-const scoreText = document.getElementById("score");
-
-let score = 0;
-let isJumping = false;
-
-// Saltar
-document.addEventListener("keydown", function (event) {
-    if (event.code === "Space") {
-        jump();
-    }
-});
-
-function jump() {
-    if (isJumping) return;
-
-    isJumping = true;
-    dino.classList.add("jump");
-
-    setTimeout(() => {
-        dino.classList.remove("jump");
-        isJumping = false;
-    }, 500);
+body {
+    font-family: Arial, sans-serif;
+    text-align: center;
+    background: #f2f2f2;
 }
 
-// Colisiones y puntaje
-let gameLoop = setInterval(() => {
-    let dinoBottom = parseInt(
-        window.getComputedStyle(dino).getPropertyValue("bottom")
-    );
+/* Área del juego */
+.game {
+    width: 90%;
+    max-width: 600px;
+    height: 200px;
+    border: 3px solid #333;
+    margin: auto;
+    position: relative;
+    background: #fff;
+    overflow: hidden;
+}
 
-    let cactusRight = parseInt(
-        window.getComputedStyle(cactus).getPropertyValue("right")
-    );
+/* BEBETO */
+#dino {
+    width: 60px;
+    height: 60px;
+    background: #444;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    left: 40px;
+    border-radius: 6px;
+}
 
-    // Colisión
-    if (cactusRight > 520 && cactusRight < 560 && dinoBottom < 40) {
-        alert("💀 Game Over\nPuntaje: " + score);
-        score = 0;
-        scoreText.textContent = "Puntaje: 0";
-    }
+/* Salto */
+.jump {
+    animation: jump 0.5s linear;
+}
 
-    score++;
-    scoreText.textContent = "Puntaje: " + score;
+@keyframes jump {
+    0% { bottom: 0; }
+    50% { bottom: 110px; }
+    100% { bottom: 0; }
+}
 
-}, 50);
+/* JOHAN */
+#cactus {
+    width: 60px;
+    height: 40px;
+    background: green;
+    color: white;
+    font-size: 10px;
+    font-weight: bold;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    bottom: 0;
+    right: -60px;
+    border-radius: 6px;
+    animation: move 1.5s infinite linear;
+}
+
+/* Movimiento */
+@keyframes move {
+    0% { right: -60px; }
+    100% { right: 100%; }
+}
