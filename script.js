@@ -84,9 +84,6 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
 }
 
-// Iniciar
-createObstacle();
-gameLoop();
 
 
 
