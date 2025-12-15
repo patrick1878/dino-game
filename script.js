@@ -1,22 +1,20 @@
+const game = document.querySelector(".game");
 const dino = document.getElementById("dino");
-const cactus = document.getElementById("cactus");
-const scoreText = document.getElementById("score");
 const jumpBtn = document.getElementById("jumpBtn");
+const scoreText = document.getElementById("score");
 
-let score = 0;
 let isJumping = false;
-let dinoY = 0; // posición vertical del dinosaurio (0 = suelo)
+let dinoY = 0; // altura del salto
+let score = 0;
 
-// Función de salto (controlado por JS)
+// Salto
 function jump() {
     if (isJumping) return;
-
     isJumping = true;
 
     let upInterval = setInterval(() => {
-        if (dinoY >= 110) { // altura máxima
+        if (dinoY >= 100) {
             clearInterval(upInterval);
-            // Bajar
             let downInterval = setInterval(() => {
                 if (dinoY <= 0) {
                     clearInterval(downInterval);
@@ -35,37 +33,61 @@ function jump() {
     }, 20);
 }
 
-// Eventos PC y móvil
-document.addEventListener("keydown", (e) => { if (e.code === "Space") jump(); });
+document.addEventListener("keydown", e => { if (e.code === "Space") jump(); });
 jumpBtn.addEventListener("click", jump);
 
-// Movimiento cactus
-let cactusX = 600; // posición inicial
-function moveCactus() {
-    cactusX -= 8; // velocidad
-    if (cactusX < -60) cactusX = 600; // reinicio al salir
-    cactus.style.left = cactusX + "px";
+// Obstáculos
+let obstacles = [];
+
+function createObstacle() {
+    const cactus = document.createElement("div");
+    cactus.classList.add("cactus");
+    cactus.style.right = "-30px";
+    game.appendChild(cactus);
+    obstacles.push(cactus);
+
+    // Crear nuevo obstáculo aleatorio
+    const randomTime = Math.random() * 2000 + 1000; // entre 1 y 3 seg
+    setTimeout(createObstacle, randomTime);
 }
 
-// Game loop
-setInterval(() => {
-    moveCactus();
+// Movimiento y colisión
+function gameLoop() {
+    obstacles.forEach((cactus, index) => {
+        let cactusRight = parseInt(cactus.style.right);
+        cactusRight += 8; // velocidad hacia la izquierda
+        cactus.style.right = cactusRight + "px";
 
-    // Colisión real
-    const dinoLeft = dino.offsetLeft;
-    const dinoRight = dinoLeft + dino.offsetWidth;
-    const cactusRight = cactusX + cactus.offsetWidth;
-    const cactusLeft = cactusX;
+        // Colisión solo si Bebeto está bajo cierta altura
+        const dinoLeft = dino.offsetLeft;
+        const dinoRight = dinoLeft + dino.offsetWidth;
+        const cactusLeft = game.offsetWidth - cactusRight - cactus.offsetWidth;
+        const cactusRightScreen = cactusLeft + cactus.offsetWidth;
 
-    if (cactusRight > dinoLeft && cactusLeft < dinoRight && dinoY < 40) {
-        alert(`💀 Game Over\nBebeto perdió contra Johan\nPuntaje: ${score}`);
-        score = 0;
-        cactusX = 600; // reinicio cactus
-    }
+        if (cactusRightScreen > dinoLeft && cactusLeft < dinoRight && dinoY < 40) {
+            alert(`💀 Game Over\nBebeto perdió contra Johan\nPuntaje: ${score}`);
+            // Reinicio
+            obstacles.forEach(c => c.remove());
+            obstacles = [];
+            score = 0;
+        }
+
+        // Eliminar cactus fuera de pantalla
+        if (cactusRight > game.offsetWidth + 30) {
+            cactus.remove();
+            obstacles.splice(index, 1);
+        }
+    });
 
     score++;
     scoreText.textContent = `Puntaje: ${score}`;
-}, 20);
+    requestAnimationFrame(gameLoop);
+}
+
+// Iniciar
+createObstacle();
+gameLoop();
+
 
 
 
