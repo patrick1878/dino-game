@@ -4,7 +4,6 @@ body {
     background: #f2f2f2;
 }
 
-/* Área del juego */
 .game {
     width: 90%;
     max-width: 600px;
@@ -12,7 +11,7 @@ body {
     border: 3px solid #333;
     margin: auto;
     position: relative;
-    background: #fff;
+    background: white;
     overflow: hidden;
 }
 
@@ -29,13 +28,13 @@ body {
     justify-content: center;
     position: absolute;
     bottom: 0;
-    left: 40px;
+    left: 30px;
     border-radius: 6px;
 }
 
 /* Salto */
 .jump {
-    animation: jump 0.5s linear;
+    animation: jump 0.5s ease-out;
 }
 
 @keyframes jump {
@@ -59,11 +58,11 @@ body {
     bottom: 0;
     right: -60px;
     border-radius: 6px;
-    animation: move 1.5s infinite linear;
+    animation: move 1.6s infinite linear;
 }
 
-/* Movimiento */
 @keyframes move {
-    0% { right: -60px; }
-    100% { right: 100%; }
+    from { right: -60px; }
+    to { right: 100%; }
 }
+
