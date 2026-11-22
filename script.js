@@ -352,8 +352,8 @@ function updateScore() {
   }
 
   // El evento especial tiene prioridad.
-  if (points >= 500) {
-    score = 500;
+  if (points >= 200) {
+    score = 200;
     triggerEnding();
   }
 
