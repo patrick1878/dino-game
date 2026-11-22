@@ -1,34 +1,37 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <title>Bebeto vs Johan</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="style.css">
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sin conexión</title>
+  <link rel="stylesheet" href="style.css">
 </head>
 <body>
+  <main class="pagina">
+    <header class="aviso">
+      <h1>Sin conexión</h1>
+      <p>No hay Internet por ahora. Mientras vuelve, llega a los 500 puntos.</p>
+    </header>
 
-<h1>Bebeto vs Johan 🕹️</h1>
-<p>Presiona ESPACIO (PC) o botón SALTAR (móvil)</p>
+    <section class="juego" aria-label="Juego del dinosaurio">
+      <canvas id="juego" width="800" height="240"
+              role="img"
+              aria-label="Juego del dinosaurio: salta los cactus y agáchate bajo los pájaros."></canvas>
 
-<div class="game">
-    <!-- Jugador -->
-    <div class="player">
-        <div class="label">BEBETO</div>
-        <div id="dino"></div>
-    </div>
-</div>
+      <div class="controles">
+        <button id="btnSaltar" type="button">Saltar</button>
+        <button id="btnAgachar" type="button">Agacharse</button>
+      </div>
 
-<button id="jumpBtn">SALTAR</button>
-<p id="score">Puntaje: 0</p>
+      <p class="ayuda">
+        Espacio o flecha arriba para saltar. Flecha abajo para agacharte.
+        La tecla M silencia el sonido.
+      </p>
+    </section>
+  </main>
 
-<script src="script.js"></script>
+  <p id="anuncio" class="solo-lectores" aria-live="polite"></p>
+
+  <script src="script.js"></script>
 </body>
 </html>
-<!-- prueba github pages -->
-
-
-
-
-
-
