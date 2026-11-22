@@ -1,465 +1,329 @@
 
-@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Nunito:wght@400;600;700;800;900&display=swap');
-
-:root {
-  --green: #43b85c;
-  --dark: #193d32;
-  --pink: #ff80ab;
-  --blue: #48a9e8;
-  --cream: #fff9eb;
-}
-
 * {
+  margin: 0;
+  padding: 0;
   box-sizing: border-box;
 }
 
 body {
-  margin: 0;
   min-height: 100vh;
-  padding: 20px;
   display: flex;
   justify-content: center;
   align-items: center;
-  background:
-    radial-gradient(circle at 20% 20%, #d8f7ff, transparent 40%),
-    linear-gradient(135deg, #a7e9ff, #d6f4ff 55%, #fff1d0);
-  color: var(--dark);
-  font-family: 'Nunito', sans-serif;
-}
-
-button {
-  font-family: inherit;
-}
-
-.game-wrapper {
-  width: min(100%, 1050px);
-  background: rgba(255,255,255,.88);
-  border: 4px solid white;
-  border-radius: 24px;
-  padding: 18px;
-  box-shadow: 0 20px 60px rgba(31, 91, 112, .18);
-}
-
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 15px;
-}
-
-.brand {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 16px;
-  color: #267d48;
-  white-space: nowrap;
-}
-
-.brand span,
-h1 span {
-  color: #ef5d94;
-}
-
-.top-actions {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.score-box {
-  min-width: 85px;
-  padding: 7px 11px;
-  background: #eef9f2;
-  border-radius: 12px;
-  text-align: center;
-  border: 1px solid #d4ead9;
-}
-
-.score-box span {
-  display: block;
-  font-size: 9px;
-  font-weight: 900;
-  color: #698675;
-}
-
-.score-box strong {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 11px;
-  display: block;
-  margin-top: 6px;
-  color: #277d49;
-}
-
-.score-box.current {
-  background: #fff0f5;
-  border-color: #ffd0df;
-}
-
-.score-box.current strong {
-  color: #e84d85;
-}
-
-.icon-button {
-  width: 39px;
-  height: 39px;
-  border: none;
-  border-radius: 12px;
-  background: #eaf3ff;
-  font-size: 19px;
-  cursor: pointer;
-  transition: transform .2s, background .2s;
-}
-
-.icon-button:hover {
-  transform: translateY(-2px);
-  background: #d6eaff;
-}
-
-.icon-button:disabled {
-  opacity: .45;
-  cursor: not-allowed;
+  background: linear-gradient(135deg, #111827, #263449);
+  font-family: 'Courier New', monospace;
+  padding: 15px;
 }
 
 .game-container {
-  position: relative;
+  width: 100%;
+  max-width: 1000px;
+  background: #fff;
+  border: 5px solid #263238;
+  border-radius: 18px;
   overflow: hidden;
-  border: 4px solid #fff;
-  border-radius: 17px;
-  background: #a9e9ff;
-  box-shadow: 0 5px 20px rgba(0,0,0,.09);
+  box-shadow: 0 15px 50px #0008;
+}
+
+.top-bar {
+  background: #263238;
+  color: white;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 16px 22px;
+  gap: 10px;
+}
+
+.logo {
+  font-size: 22px;
+  font-weight: bold;
+  color: #8df58b;
+}
+
+.score-box {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 13px;
+}
+
+.score-box strong {
+  color: #ffe66d;
+  font-size: 18px;
+}
+
+.separator {
+  color: #718096;
+}
+
+.game-area {
+  position: relative;
+  background: #b8e8ff;
+  overflow: hidden;
 }
 
 canvas {
   display: block;
   width: 100%;
   height: auto;
-  aspect-ratio: 900 / 400;
   image-rendering: pixelated;
-  touch-action: manipulation;
 }
 
-.overlay {
+.screen {
   position: absolute;
   inset: 0;
-  z-index: 5;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: center;
-  padding: 15px;
-  background: rgba(18, 43, 52, .48);
-  backdrop-filter: blur(4px);
-  animation: appear .35s ease;
+  align-items: center;
+  text-align: center;
+  background: #152c3dd9;
+  color: white;
+  padding: 20px;
+  z-index: 5;
 }
 
 .hidden {
   display: none !important;
 }
 
-.dialog,
-.love-dialog {
-  width: min(100%, 510px);
-  padding: 25px;
-  text-align: center;
-  background: var(--cream);
-  border: 4px solid white;
-  border-radius: 22px;
-  box-shadow: 0 15px 40px rgba(0,0,0,.18);
-  animation: pop .45s cubic-bezier(.2,.8,.3,1.3);
+.screen h1 {
+  font-size: clamp(25px, 5vw, 44px);
+  margin: 10px 0;
+  color: #fff;
+  text-shadow: 3px 3px #000;
 }
 
-.hero-dino {
-  font-size: 65px;
-  animation: bounce 1.4s infinite;
+.screen p {
+  font-size: clamp(12px, 2vw, 17px);
+  margin: 10px 0;
+  line-height: 1.6;
 }
 
-.eyebrow {
-  font-size: 10px;
-  font-weight: 900;
-  letter-spacing: 3px;
-  color: #65a47a;
+.screen button {
+  border: none;
+  padding: 15px 25px;
+  border-radius: 10px;
+  background: #43c66b;
+  color: white;
+  font-family: inherit;
+  font-weight: bold;
+  font-size: 15px;
+  cursor: pointer;
+  margin-top: 18px;
+  box-shadow: 0 5px #218344;
+  transition: .2s;
 }
 
-h1 {
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(23px, 5vw, 35px);
-  margin: 15px 0;
-  color: #29924c;
+.screen button:hover {
+  transform: translateY(-3px);
+  background: #2da957;
 }
 
-.dialog h2,
-.love-dialog h2 {
-  font-family: 'Press Start 2P', monospace;
-  font-size: clamp(16px, 3vw, 24px);
-  line-height: 1.7;
-  color: #df4c70;
+.start-dino {
+  font-size: 75px;
+  animation: bounce 1s infinite alternate;
 }
 
-.dialog p,
-.love-dialog p {
-  font-size: 16px;
-  font-weight: 700;
+.screen h1 span {
+  color: #7aff9d;
 }
 
 .instructions {
-  margin: 20px 0;
-  line-height: 2.2;
-  font-size: 13px;
-  font-weight: 800;
+  margin-top: 22px;
+  font-size: 12px;
+  line-height: 2;
+  color: #d8e8ef;
 }
 
-.instructions span {
-  background: #dff3e4;
-  border-radius: 5px;
-  padding: 5px 7px;
-  color: #287d46;
+.bottom-bar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 20px;
+  background: #263238;
+  color: #fff;
+  font-size: 12px;
+  font-weight: bold;
+  gap: 10px;
 }
 
-.main-button {
-  display: inline-block;
-  width: 100%;
-  max-width: 350px;
-  border: none;
-  border-radius: 13px;
-  padding: 16px 12px;
-  background: linear-gradient(135deg, #38b85f, #20934d);
+#soundButton {
+  background: #455a64;
   color: white;
-  font-weight: 900;
-  font-size: 14px;
+  border: none;
+  border-radius: 8px;
+  padding: 7px 12px;
   cursor: pointer;
-  box-shadow: 0 5px 0 #176b38;
-  transition: transform .15s, box-shadow .15s;
+  font-size: 18px;
 }
 
-.main-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 7px 0 #176b38;
+.floating-message {
+  position: absolute;
+  top: 18%;
+  left: 50%;
+  transform: translateX(-50%);
+  color: #e85b36;
+  font-weight: bold;
+  font-size: clamp(13px, 2vw, 20px);
+  text-shadow: 1px 1px white;
+  z-index: 3;
+  pointer-events: none;
+  white-space: nowrap;
 }
 
-.main-button:active {
-  transform: translateY(3px);
-  box-shadow: 0 2px 0 #176b38;
+.ending {
+  background: #17202eeF;
 }
 
-.dialog small {
-  display: block;
-  margin-top: 17px;
-  color: #82958a;
-  font-weight: 700;
-}
-
-.big-emoji {
-  font-size: 60px;
-}
-
-.final-score {
-  padding: 12px;
-  background: #fff0f5;
-  border-radius: 10px;
-}
-
-.final-score strong {
-  color: #e84d85;
-  font-family: 'Press Start 2P', monospace;
-}
-
-.love-dialog {
-  max-height: 96%;
-  overflow-y: auto;
-  background: #fff2f4;
-  border-color: #ffd5df;
-}
-
-.broken-heart {
-  font-size: 56px;
-  animation: heartBreak .7s infinite alternate;
-}
-
-.love-dialog h2 {
-  color: #d9315e;
-  margin: 7px 0;
+.ending-title {
+  color: #ff7777 !important;
+  animation: shake .5s infinite;
 }
 
 .love-scene {
-  min-height: 115px;
-  margin: 15px 0;
   display: flex;
+  width: 100%;
+  max-width: 550px;
   justify-content: space-around;
   align-items: center;
-  gap: 5px;
-  background: linear-gradient(#d7efff, #fff0d8);
-  border-radius: 15px;
-  padding: 12px;
+  margin: 15px 0;
+  min-height: 105px;
 }
 
-.love-character,
+.ending-dino {
+  font-size: clamp(40px, 8vw, 65px);
+  position: relative;
+}
+
+.hero-dino {
+  animation: cry 1s infinite alternate;
+  filter: grayscale(.4);
+}
+
+.tears {
+  position: absolute;
+  font-size: 22px;
+  top: 15px;
+  right: -15px;
+  animation: tearFall .7s infinite;
+}
+
+.heart-broken {
+  position: absolute;
+  top: -25px;
+  left: 0;
+  font-size: 30px;
+  animation: heartBreak .8s infinite alternate;
+}
+
 .couple {
   display: flex;
   align-items: center;
-  flex-direction: column;
-}
-
-.pixel-dino {
-  font-size: 39px;
-  display: inline-block;
-}
-
-.pixel-dino.green {
-  filter: hue-rotate(35deg);
-  animation: sad .8s infinite alternate;
-}
-
-.pixel-dino.pink {
-  filter: hue-rotate(290deg) saturate(1.5);
-}
-
-.pixel-dino.blue {
-  filter: hue-rotate(175deg);
-}
-
-.love-character span,
-.couple span {
-  font-size: 9px;
-  font-weight: 900;
-  margin-top: 5px;
-}
-
-.couple {
+  gap: 4px;
   position: relative;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: center;
-  max-width: 140px;
 }
 
-.couple span {
-  width: 100%;
+.girlfriend {
+  animation: bounce 1s infinite alternate;
 }
 
-.heart-between {
-  font-size: 30px;
-  animation: heartBreak .6s infinite alternate;
+.rival {
+  animation: bounce 1s .3s infinite alternate;
 }
 
-.cry-text {
-  font-family: 'Press Start 2P', monospace;
-  color: #3988ca;
-  font-size: 11px;
-  margin: 15px 0;
-  animation: shake .2s infinite;
+.couple-heart {
+  position: absolute;
+  top: -35px;
+  left: 40%;
+  font-size: 25px;
+  animation: heartBeat .8s infinite;
 }
 
-.ending-text {
-  font-family: 'Press Start 2P', monospace;
-  font-size: 13px !important;
-  color: #d9315e;
-  letter-spacing: 2px;
+.ending-message {
+  color: #fff;
+  font-size: clamp(13px, 2.2vw, 19px) !important;
+  font-weight: bold;
 }
 
-.footer {
-  display: flex;
-  justify-content: space-between;
-  gap: 10px;
-  padding: 15px 3px 0;
-  font-size: 11px;
-  font-weight: 800;
-  color: #769183;
-}
-
-@keyframes appear {
-  from { opacity: 0; }
-  to { opacity: 1; }
-}
-
-@keyframes pop {
-  from { transform: scale(.75); opacity: 0; }
-  to { transform: scale(1); opacity: 1; }
+.fin-love {
+  color: #ff5e75 !important;
+  letter-spacing: 5px;
+  animation: fade 1.5s infinite alternate;
 }
 
 @keyframes bounce {
-  0%, 100% { transform: translateY(0); }
-  50% { transform: translateY(-12px); }
-}
-
-@keyframes heartBreak {
-  from { transform: scale(1) rotate(-8deg); }
-  to { transform: scale(1.2) rotate(8deg); }
-}
-
-@keyframes sad {
-  from { transform: rotate(-5deg) translateY(0); }
-  to { transform: rotate(5deg) translateY(5px); }
+  from { transform: translateY(0); }
+  to { transform: translateY(-15px); }
 }
 
 @keyframes shake {
-  0%, 100% { transform: translateX(-2px); }
-  50% { transform: translateX(2px); }
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-3px) rotate(-1deg); }
+  75% { transform: translateX(3px) rotate(1deg); }
+}
+
+@keyframes cry {
+  from { transform: translateY(0) rotate(0); }
+  to { transform: translateY(12px) rotate(-12deg); }
+}
+
+@keyframes tearFall {
+  0% { transform: translateY(-5px); opacity: 0; }
+  50% { opacity: 1; }
+  100% { transform: translateY(25px); opacity: 0; }
+}
+
+@keyframes heartBreak {
+  from { transform: scale(1) rotate(-10deg); }
+  to { transform: scale(1.4) rotate(10deg); }
+}
+
+@keyframes heartBeat {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+}
+
+@keyframes fade {
+  from { opacity: .5; }
+  to { opacity: 1; }
 }
 
 @media (max-width: 600px) {
   body {
-    padding: 7px;
-    align-items: flex-start;
+    padding: 5px;
   }
 
-  .game-wrapper {
-    padding: 9px;
-    border-radius: 16px;
+  .game-container {
+    border-width: 3px;
+    border-radius: 10px;
   }
 
-  .topbar {
-    flex-direction: column;
-    align-items: stretch;
+  .top-bar {
+    padding: 12px 8px;
   }
 
-  .brand {
-    text-align: center;
-    font-size: 13px;
-  }
-
-  .top-actions {
-    justify-content: center;
-    gap: 6px;
+  .logo {
+    font-size: 15px;
   }
 
   .score-box {
-    min-width: 75px;
-    padding: 6px;
+    gap: 5px;
+    font-size: 9px;
   }
 
   .score-box strong {
-    font-size: 9px;
-  }
-
-  .icon-button {
-    width: 34px;
-    height: 34px;
-  }
-
-  .dialog,
-  .love-dialog {
-    padding: 15px;
-  }
-
-  .dialog p,
-  .love-dialog p {
     font-size: 13px;
   }
 
-  .main-button {
-    font-size: 11px;
-    padding: 14px 8px;
-  }
-
-  .footer {
+  .bottom-bar {
+    padding: 10px 7px;
     font-size: 9px;
   }
-}
 
-@media (prefers-reduced-motion: reduce) {
-  *, *::before, *::after {
-    animation-duration: .01ms !important;
-    animation-iteration-count: 1 !important;
-    scroll-behavior: auto !important;
+  .screen button {
+    padding: 12px 15px;
+    font-size: 12px;
   }
 }
