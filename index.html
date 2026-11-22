@@ -4,96 +4,93 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="theme-color" content="#9be7ff">
   <title>DINO LOVE 💔</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
-  <main class="game-wrapper">
-    <header class="topbar">
-      <div class="brand">🦖 DINO <span>LOVE</span> 💔</div>
-      <div class="top-actions">
-        <div class="score-box">
-          <span>RECORD</span>
-          <strong id="bestScore">00000</strong>
-        </div>
-        <div class="score-box current">
-          <span>PUNTOS</span>
-          <strong id="score">00000</strong>
-        </div>
-        <button id="soundButton" class="icon-button" aria-label="Activar o desactivar sonido">🔊</button>
-        <button id="pauseButton" class="icon-button" aria-label="Pausar" disabled>Ⅱ</button>
+
+  <main class="game-container">
+
+    <header class="top-bar">
+      <div class="logo">🦖 DINO LOVE</div>
+      <div class="score-box">
+        <span>RECORD</span>
+        <strong id="bestScore">000</strong>
+        <span class="separator">|</span>
+        <span>PUNTOS</span>
+        <strong id="score">000</strong>
       </div>
     </header>
 
-    <section class="game-container">
-      <canvas id="gameCanvas" width="900" height="400"
-              aria-label="Juego de dinosaurio DINO LOVE"></canvas>
+    <section class="game-area">
 
-      <div id="startScreen" class="overlay">
-        <div class="dialog">
-          <div class="hero-dino">🦖</div>
-          <div class="eyebrow">UNA AVENTURA ROMÁNTICA</div>
-          <h1>DINO <span>LOVE</span> 💚</h1>
-          <p>Una carrera por encontrar el amor...</p>
-          <div class="instructions">
-            <span>SPACE</span> o <span>↑</span> para saltar
-            <br>
-            <span>TOCAR</span> para saltar · <span>P</span> para pausar
+      <canvas id="gameCanvas" width="900" height="350"></canvas>
+
+      <div id="startScreen" class="screen">
+        <div class="start-dino">🦖</div>
+        <h1>DINO LOVE <span>💚</span></h1>
+        <p>Una carrera por encontrar el amor...</p>
+        <button id="startButton">COMENZAR A CORRER</button>
+        <div class="instructions">
+          ESPACIO o ↑ para saltar<br>
+          TOCAR para saltar<br>
+          P para pausar
+        </div>
+      </div>
+
+      <div id="pauseScreen" class="screen hidden">
+        <h1>⏸ PAUSADO</h1>
+        <p>El amor puede esperar...</p>
+        <button id="resumeButton">CONTINUAR</button>
+      </div>
+
+      <div id="gameOverScreen" class="screen hidden">
+        <div class="sad-icon">💀</div>
+        <h1>GAME OVER</h1>
+        <p>¡El amor puede esperar, pero los cactus no!</p>
+        <p>Puntuación: <strong id="finalScore">0</strong></p>
+        <button id="restartButton">INTENTAR DE NUEVO</button>
+      </div>
+
+      <div id="endingScreen" class="screen ending hidden">
+        <h1 class="ending-title">NOOOOO... ¿POR QUÉ? 😭</h1>
+
+        <div class="love-scene">
+          <div class="ending-dino hero-dino">
+            <div class="heart-broken">💔</div>
+            <div class="tears">💧 💧</div>
+            🦖
           </div>
-          <button id="startButton" class="main-button">COMENZAR A CORRER ▶</button>
-          <small>¿Encontrará Dino el amor verdadero?</small>
-        </div>
-      </div>
 
-      <div id="gameOverScreen" class="overlay hidden">
-        <div class="dialog">
-          <div class="big-emoji">🌵💥</div>
-          <h2>GAME OVER</h2>
-          <p>¡El amor puede esperar, pero los cactus no!</p>
-          <p class="final-score">Puntuación: <strong id="finalScore">0</strong></p>
-          <button id="restartButton" class="main-button">INTENTAR DE NUEVO ↻</button>
-        </div>
-      </div>
-
-      <div id="pauseScreen" class="overlay hidden">
-        <div class="dialog">
-          <div class="big-emoji">⏸️</div>
-          <h2>JUEGO EN PAUSA</h2>
-          <p>Respira, Dino. ¡El amor te espera!</p>
-          <button id="resumeButton" class="main-button">CONTINUAR ▶</button>
-        </div>
-      </div>
-
-      <div id="loveScreen" class="overlay hidden">
-        <div class="love-dialog">
-          <div class="broken-heart">💔</div>
-          <h2 id="loveTitle">NOOOOO... ¿POR QUÉ? 😭</h2>
-          <p id="loveMessage">Corrí 500 metros por amor...</p>
-          <div class="love-scene">
-            <div class="love-character">
-              <div class="pixel-dino green">🦖</div>
-              <span>DINO</span>
-            </div>
-            <div class="heart-between">💔</div>
-            <div class="couple">
-              <div class="pixel-dino pink">🦕</div>
-              <div class="pixel-dino blue">🦖</div>
-              <span>LA NOVIA Y EL OTRO 😭</span>
-            </div>
+          <div class="couple">
+            <div class="ending-dino girlfriend">🦕🎀</div>
+            <div class="ending-dino rival">🦖💙</div>
+            <div class="couple-heart">❤️</div>
           </div>
-          <div class="cry-text">BUAAAAAA 😭😭😭</div>
-          <p class="ending-text">FIN DEL AMOR</p>
-          <button id="loveRestartButton" class="main-button">VOLVER A CORRER ↻</button>
         </div>
+
+        <p class="ending-message">
+          Corrí 500 puntos por amor...<br>
+          y me cambiaron por otro dinosaurio. 💔
+        </p>
+
+        <h2 class="fin-love">FIN DEL AMOR</h2>
+
+        <button id="endingRestartButton">VOLVER A INTENTARLO</button>
       </div>
+
+      <div id="message" class="floating-message"></div>
+
     </section>
 
-    <footer class="footer">
-      <span>🦖 DINO LOVE</span>
-      <span>Hecho con ❤️, lágrimas y JavaScript</span>
+    <footer class="bottom-bar">
+      <span>🌵 EVITA LOS CACTUS</span>
+      <button id="soundButton" title="Activar o desactivar sonido">🔊</button>
+      <span>❤️ OBJETIVO: 500 PUNTOS</span>
     </footer>
+
   </main>
+
 </body>
 </html>
